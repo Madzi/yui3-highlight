@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <link rel="stylesheet" href="http://yui.yahooapis.com/pure/0.4.2/pure-min.css">
+        <title>YUI-Highlight demo page</title>
+        <script src="http://yui.yahooapis.com/3.16.0/build/yui/yui-min.js"></script>
+        <script type="text/javascript">
+YUI({
+    modules: {
+        'e2-stream': {
+            fullpath: 'lib/e2-stream/e2-stream.js',
+            requires: ['base']
+        },
+        'e2-prog-lang': {
+            fullpath: 'lib/e2-prog-lang/e2-prog-lang.js',
+            requires: ['model', 'model-list', 'e2-stream']
+        },
+        'e2-highlight': {
+            fullpath: 'lib/e2-highlight/e2-highlight.js',
+            requires: ['node', 'e2-stream', 'e2-prog-lang']
+        }
+    }
+}).use('e2-stream', 'e2-prog-lang', 'e2-highlight', 'test', function (Y) {
+
+    var highlight = new Y.E2.Highlight(),
+        nodes = Y.all('pre');
+
+    nodes.each(function (node) {
+        var lang = node.get('lang');
+
+        Y.one('#' + lang + '-hl').appendChild(highlight.process(node));
+    });
+
+});
+        </script>
+    </head>
+    <body><a name="top"></a>
+        <h1>Syntax highlight demo page</h1>
+        <nav></nav>
+        <article><a name="plain"></a>
+            <h2>Plain text</h2>
+            <div class="pure-g">
+                <div class="pure-u-1-2">
+<pre lang="plain">
+First line.
+Second line.
+Third line.
+</pre>
+                </div>
+                <div class="pure-u-1-2">
+                <div id="plain-hl"></div>
+                </div>
+            </div>
+            <footer><a href="#top">Top</a></footer>
+        </article>
+        <article><a name="diff"></a>
+            <h2>Diff</h2>
+            <div class="pure-g">
+                <div class="pure-u-1-2">
+<pre lang="diff">
+--- /path/to/original   ''timestamp''
++++ /path/to/new    ''timestamp''
+@@ -1,3 +1,9 @@
++This is an important
++notice! It should
++therefore be located at
++the beginning of this
++document!
++
+ This part of the
+ document has stayed the
+ same from version to
+@@ -5,16 +11,10 @@
+ be shown if it doesn't
+ change.  Otherwise, that
+ would not be helping to
+-compress the size of the
+-changes.
+-
+-This paragraph contains
+-text that is outdated.
+-It will be deleted in the
+-near future.
++compress anything.
+ 
+ It is important to spell
+-check this dokument. On
++check this document. On
+ the other hand, a
+ misspelled word isn't
+ the end of the world.
+@@ -22,3 +22,7 @@
+ this paragraph needs to
+ be changed. Things can
+ be added after it.
++
++This paragraph contains
++important new additions
++to this document.  
+</pre>
+                </div>
+                <div class="pure-u-1-2">
+                <div id="diff-hl"></div>
+                </div>
+            </div>
+            <footer><a href="#top">Top</a></footer>
+        </article>
+    </body>
+</html>
